@@ -560,10 +560,12 @@ App.prototype.bindKeyboardEvent = function() {
 App.prototype.bindTouchEvent = function() {
     var _this = this
     this.gridContainer.on('touchstart', function(event) {
-        log('touch')
-        log(event)
         _this.startx = event.originalEvent.touches[0].pageX
         _this.starty = event.originalEvent.touches[0].pageY
+    })
+
+    this.gridContainer.on('touchmove', function(event) {
+        event.preventDefault()
     })
 
     this.gridContainer.on('touchend', function(event) {
