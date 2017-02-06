@@ -493,7 +493,6 @@ App.prototype.showNumberWithAnimation = function(i, j, randNum) {
 //判断游戏是否结束
 App.prototype.isGameOver = function() {
     if (!this.hasSpace() && !this.canMove()) {
-        alert('over')
         this.showGameOver()
     }
 }
