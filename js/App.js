@@ -89,6 +89,7 @@ App.prototype.initChessNumber = function() {
 //在随机位置产生一个数字
 App.prototype.generateOneNumber = function() {
     if (!this.hasSpace) {
+        log('no space')
         return false
     }
     while (true) {
@@ -328,7 +329,6 @@ App.prototype.moveLeft = function() {
                         this.board[i][j] = 0
                         break
                     } else if (now == before && this.noBlockHorizontal(i, k, j) && !this.hasConflicted[i][k]) {
-                        log('this.noBlockHorizontal(i, j, k)', this.noBlockHorizontal(i, j, k))
                         //move
                         this.showMoveAnimation(i, j, i, k)
                         //add
@@ -518,6 +518,7 @@ App.prototype.bindMouseClickEvent = function() {
 App.prototype.bindKeyboardEvent = function() {
     var _this = this
     $(document).on('keyup', function(event) {
+        event.preventDefault()
         var code = event.keyCode
         var leftCode = 37
         var rightCode = 39
@@ -528,26 +529,22 @@ App.prototype.bindKeyboardEvent = function() {
                 if (_this.moveLeft()) {
                     setTimeout(_this.isGameOver.bind(_this), 300)
                 }
-                log('left')
-                break;
+                break
             case upCode:
                 if (_this.moveUp()) {
                     setTimeout(_this.isGameOver.bind(_this), 300)
                 }
-                log('up')
-                break;
+                break
             case rightCode:
                 if (_this.moveRight()) {
                     setTimeout(_this.isGameOver.bind(_this), 300)
                 }
-                log('right')
-                break;
+                break
             case downCode:
                 if (_this.moveDown()) {
                     setTimeout(_this.isGameOver.bind(_this), 300)
                 }
-                log('down')
-                break;
+                break
             default:
 
         }
