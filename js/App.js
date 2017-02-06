@@ -559,14 +559,14 @@ App.prototype.bindKeyboardEvent = function() {
 //绑定触摸事件
 App.prototype.bindTouchEvent = function() {
     var _this = this
-    $(document).on('touchstart', function(event) {
+    this.gridContainer.on('touchstart', function(event) {
         log('touch')
         log(event)
         _this.startx = event.originalEvent.touches[0].pageX
         _this.starty = event.originalEvent.touches[0].pageY
     })
 
-    $(document).on('touchend', function(event) {
+    this.gridContainer.on('touchend', function(event) {
         _this.endx = event.originalEvent.changedTouches[0].pageX
         _this.endy = event.originalEvent.changedTouches[0].pageY
 
@@ -602,5 +602,4 @@ App.prototype.bindTouchEvent = function() {
 
         }
     })
-
 }
