@@ -7,6 +7,11 @@ const App = function() {
     this.cellSideWidth = this.documentWidth * 0.18
     this.spaceWidth = this.documentWidth * 0.04
 
+    this.startx = 0
+    this.starty = 0
+    this.endx = 0
+    this.endy = 0
+
     this.gridContainer = $('#grid-container')
     this.gridCell = $('.grid-cell')
 
@@ -505,6 +510,7 @@ App.prototype.showGameOver = function() {
 App.prototype.bindEvents = function() {
     this.bindKeyboardEvent()
     this.bindMouseClickEvent()
+    this.bindTouchEvent()
 }
 //绑定鼠标点击开始新游戏
 App.prototype.bindMouseClickEvent = function() {
@@ -549,4 +555,52 @@ App.prototype.bindKeyboardEvent = function() {
 
         }
     })
+}
+//绑定触摸事件
+App.prototype.bindTouchEvent = function() {
+    var _this = this
+    $(document).on('touchstart', function(event) {
+        log('touch')
+        log(event)
+        _this.startx = event.originalEvent.touches[0].pageX
+        _this.starty = event.originalEvent.touches[0].pageY
+    })
+
+    $(document).on('touchend', function(event) {
+        _this.endx = event.originalEvent.changedTouches[0].pageX
+        _this.endy = event.originalEvent.changedTouches[0].pageY
+
+        var deltaX = _this.endx - _this.startx
+        var deltaY = _this.endy - _this.starty
+
+        if (Math.abs(deltaX) < 0.1 * _this.documentWidth && Math.abs(deltaY) < 0.1 * _this.documentWidth) {
+            return
+        }
+
+        if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+            if (deltaX > 0) {
+                if (_this.moveRight()) {
+                    setTimeout(_this.isGameOver.bind(_this), 300)
+                }
+            } else {
+                if (_this.moveLeft()) {
+                    setTimeout(_this.isGameOver.bind(_this), 300)
+                }
+            }
+        } else {
+            if (deltaY > 0) {
+                if (_this.moveDown()) {
+                    setTimeout(_this.isGameOver.bind(_this), 300)
+                }
+
+            } else {
+                //move up
+                if (_this.moveUp()) {
+                    setTimeout(_this.isGameOver.bind(_this), 300)
+                }
+            }
+
+        }
+    })
+
 }
